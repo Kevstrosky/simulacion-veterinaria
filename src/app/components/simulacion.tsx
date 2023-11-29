@@ -40,7 +40,7 @@ const Simulation: React.FC = () => {
   useEffect(() => {
     if (simulating) {
       const interval = setInterval(() => {
-        const newPatient = `Paciente ${patientCounter}`;
+        const newPatient = `Animal ${patientCounter}`;
         setPatients((prevPatients) => [...prevPatients, newPatient]);
         setPatientCounter((prevCounter) => prevCounter + 1);
       }, 5000);
@@ -66,10 +66,15 @@ const Simulation: React.FC = () => {
   }, [simulating, patients, currentPatient]);
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-4">
-        Simulación de Veterinaria (Eventos Discretos)
-      </h1>
+    <div className="max-w-[960px] mx-auto py-8 flex flex-col">
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold mb-4 text-[#39A7FF]">
+          Simulación de Veterinaria (Eventos Discretos)
+        </h1>
+        <h1 className="text-3xl font-bold mb-4 text-[#0174BE]">
+          Por Kevin Ochoa Guerrero
+        </h1>
+      </div>
       {!simulating && (
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -83,7 +88,7 @@ const Simulation: React.FC = () => {
       {simulating && (
         <>
           <div className="mt-8">
-            <h2 className="text-xl font-semibold">Pacientes en Espera:</h2>
+            <h2 className="text-xl font-semibold">Animales en espera:</h2>
             <ul>
               {patients.map((patient, index) => (
                 <li key={index}>{patient}</li>
@@ -93,34 +98,44 @@ const Simulation: React.FC = () => {
 
           {currentPatient && (
             <div className="mt-8">
-              <h2 className="text-xl font-semibold">Paciente en Consulta:</h2>
+              <h2 className="text-xl font-semibold">Animales en consulta:</h2>
               <p>{currentPatient}</p>
             </div>
           )}
 
           {patientRecords.length > 0 && (
             <div className="mt-8">
-              <h2 className="text-xl font-semibold">Pacientes Atendidos:</h2>
-              <table className="border-collapse border border-gray-400">
-                <thead>
-                  <tr>
-                    <th className="border border-gray-400 px-4 py-2">ID</th>
-                    <th className="border border-gray-400 px-4 py-2">Nombre</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {patientRecords.map((record) => (
-                    <tr key={record.id}>
-                      <td className="border border-gray-400 px-4 py-2">
-                        {record.id}
-                      </td>
-                      <td className="border border-gray-400 px-4 py-2">
-                        {record.name}
-                      </td>
+              <h2 className="text-xl font-semibold text-green-500">
+                Animales atendidos:
+              </h2>
+              <div
+                className={
+                  patientRecords.length > 5 ? "overflow-y-auto h-80" : ""
+                }
+              >
+                <table className="border-collapse border border-gray-400">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-400 px-4 py-2">ID</th>
+                      <th className="border border-gray-400 px-4 py-2">
+                        Nombre
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {patientRecords.map((record) => (
+                      <tr key={record.id}>
+                        <td className="border border-gray-400 px-4 py-2">
+                          {record.id}
+                        </td>
+                        <td className="border border-gray-400 px-4 py-2">
+                          {record.name}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </>
